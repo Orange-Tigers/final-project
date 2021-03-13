@@ -4,13 +4,17 @@ const mongoose = require('mongoose')
 const users = require('./routes/users')
 const bodyParser = require('body-parser')
 
+require('dotenv').config();
+
+
+//connect to the database using mangoose
+
 ////////to create a user login\\\\\\\\\ 
 //1. create server and connect to mangodb using mangoose
-const connectionString = "mongodb+srv://admin:orangetiger@cluster0.fbk2o.mongodb.net/mangodb?retryWrites=true&w=majority"
 const connectionConfig= {useNewUrlParser:true, useUnifiedTopology:true};
-mongoose.connect(connectionString, connectionConfig)
+mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
 .then(
-    () => {
+    (dbDocument) => {
         console.log('DB is connected')
     }
 )
@@ -20,6 +24,7 @@ mongoose.connect(connectionString, connectionConfig)
 
     }
 )
+
 server.listen(
     3002, () => {
         console.log("Server Running on http://localhost:3002/")
