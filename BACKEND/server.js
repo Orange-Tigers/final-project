@@ -3,6 +3,7 @@ const server = express()
 const mongoose = require('mongoose')
 const users = require('./routes/users')
 const bodyParser = require('body-parser')
+const products = require('./routes/products.js')
 
 require('dotenv').config();
 
@@ -24,6 +25,13 @@ mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
 
     }
 )
+
+// To user products Route
+server.use(
+    '/product', //http://www.myapp.com/product
+    products
+)
+
 
 server.listen(
     3002, () => {
