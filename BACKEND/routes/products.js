@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const ProductsModel = require('../models/ProductsModel.js');
+const ProductsModel = require('../models/ProductsModel');
+
+
 
 //Product Creation Route
 
 router.post(
-    '/',             // //http://www.myapp.com/product/
+    '/add',             // //http://www.myapp.com/product/
     (req, res) => {
 
         // Capture the data in the BODY section
         const formData = {
-            name: req.body.name,
+            productname: req.body.productname,
             details: req.body.details,
             price: req.body.price,
-            image: req.body.image
+            imageurl: req.body.imageurl
         }
 
         // Instantiate an instance of the ProductsModel constructor
@@ -31,7 +33,7 @@ router.post(
         // If Promise rejects...
         .catch(
             (error) => {
-                console.log(error)
+                res.json(error)
             }
         )
     }
@@ -46,7 +48,7 @@ router.post(
         ProductsModel
         .findOneAndUpdate(
             {
-                'model': req.body.model
+                'productname': req.body.productname
             },
             {
                 $set: {
@@ -66,6 +68,25 @@ router.post(
         )
     }
 )
+// Product listing
+router.get(
+    '/list',                 
+    (req, res) => {
 
+        ProductsModel
+        .find()
+        .then(
+            (dbDocuments) => {
+                res.send(dbDocuments)
+            }
+        )
+        .catch(
+            (error) => {
+                console.log(error)
+            }
+        )
+
+    }
+);
 
 module.exports = router;

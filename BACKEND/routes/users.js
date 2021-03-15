@@ -67,4 +67,43 @@ router.get(
         .catch((err)=> res.send("the user is not found"))
     }
 )
+router.post(
+    '/update', (req,res) => {
+        UsersModel.findOne({email:req.body.email})
+        .then( UserFound =>
+            {
+                if(!UserFound)
+                    res.send('this account is not created. Enter the Email used for this account')
+                else{
+                    bcryptjs.genSalt(
+                        (err, salt) =>
+                        {
+                            bcryptjs.hash(
+                                req.body.password,salt,(err, EncryptedPassword)=> 
+                                {
+                                    UserFound.password = EncryptedPassword;
+                                    UserFound.save()
+                                    .then
+                                    ( 
+                                        dbDocument => 
+                                            res.send("<h1>password is updated successfully</h1>")
+                                    )
+                                    .catch(
+                                        err =>
+                                        res.send(err)
+                                        
+                                    )                 
+                                } 
+                            )   
+                        }
+                    )
+                }
+
+            }
+
+        )
+        .catch((err)=> res.send("the user is not found"))
+    }
+)
+
 module.exports = router

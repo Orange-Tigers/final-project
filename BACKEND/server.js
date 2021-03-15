@@ -1,7 +1,7 @@
 const express = require('express')
 const server = express()
 const mongoose = require('mongoose')
-const users = require('./routes/users')
+const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
 
@@ -26,18 +26,9 @@ mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
     }
 )
 
-// To user products Route
-server.use(
-    '/product', //http://www.myapp.com/product
-    products
-)
 
 
-server.listen(
-    3002, () => {
-        console.log("Server Running on http://localhost:3002/")
-    }
-)
+
 // Tell express how to use body-parser
 server.use( bodyParser.urlencoded({ extended: false }) );
 // Also tell express to recognize JSON
@@ -45,4 +36,14 @@ server.use( bodyParser.json() );
 
 server.use(
     '/user', users
+)
+// To user products Route
+server.use(
+    '/product', //http://www.myapp.com/product
+    products
+)
+server.listen(
+    3002, () => {
+        console.log("Server Running on http://localhost:3002/")
+    }
 )
