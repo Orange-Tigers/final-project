@@ -9,7 +9,7 @@ const Footer = (props) => {
               <div class="col-md-4">
                   <div class="single-widget single-widget1">
                       <a href="index.html"><img src={props.logo} width="182 px" height="53 px" alt=""/></a>
-                      <p class="mt-3">Which morning fourth great won't is to fly bearing man. Called unto shall seed, deep, herb set seed land divide after over first creeping. First creature set upon stars deep male gathered said she'd an image spirit our</p>
+                      <p class="mt-3">Great taste in every bite.</p>
                   </div>
               </div>
               <div class="col-md-4">
@@ -20,7 +20,7 @@ const Footer = (props) => {
                               <i class="fa fa-map-marker"></i>
                           </div>
                           <div class="info-text">
-                              <p>1234 Some St San Francisco, CA 94102, US 1.800.123.4567 </p>
+                              <p>1234 Dubai, UAE </p>
                           </div>
                       </div>
                       <div class="d-flex">
@@ -36,7 +36,7 @@ const Footer = (props) => {
                               <i class="fa fa-envelope-o"></i>
                           </div>
                           <div class="info-text">
-                              <p>support@axiomthemes.com</p>
+                              <p>support@bakery.com</p>
                           </div>
                       </div>
                   </div>

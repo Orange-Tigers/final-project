@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './ui/assets/css/animate-3.7.0.css';
+
 
 
 import App from './App';
