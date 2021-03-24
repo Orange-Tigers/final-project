@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Footer = (props) => {
     return (
   <footer class="footer-area">
@@ -8,7 +9,7 @@ const Footer = (props) => {
           <div class="row">
               <div class="col-md-4">
                   <div class="single-widget single-widget1">
-                      <a href="index.html"><img src={props.logo} width="182 px" height="53 px" alt=""/></a>
+                      <a href="#"><img src={props.logo} width="182 px" height="53 px" alt=""/></a>
                       <p class="mt-3">Great taste in every bite.</p>
                   </div>
               </div>
@@ -53,6 +54,7 @@ const Footer = (props) => {
           </div>
       </div>
   </div>
+  <p style={{'background-color':'black', 'padding':'20px', 'text-align':'center'}} >Copyrights 	&#169; 2021 Hala, Zahra, Yosra, Shaimaa </p>
   </footer>
   )
   }

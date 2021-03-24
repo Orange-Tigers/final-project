@@ -9,7 +9,7 @@ const Header = (props) => {
               <div class="row">
                   <div class="col-lg-2">
                       <div class="logo-area">
-                          <a href="index.html"><img src={props.logo} width="159 px" height="49 px" alt="logo" /></a>
+                          <a href="#"><img src={props.logo} width="159 px" height="49 px" alt="logo" /></a>
                       </div>
                   </div>
                   <div class="col-lg-10">

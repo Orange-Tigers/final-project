@@ -6,7 +6,7 @@ const validateEmail = (email) => {
 }
 
 const validatePassword = (password) => {
-    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,16}$/;
+    const re = /^(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,50}$/;
     return re.test(password);
 }
 
@@ -91,24 +91,25 @@ const RegisterScreen = () =>{
                     <div className="card shadow-lg  col-8 m-5 p-5">
    
                             <div class="form-floating mb-3">
-                                <label for="floatingInput">First Name</label>
-                                <input ref={(element) => firstNameField= element} type="text" class="form-control" id="floatingInput" />
+                                <label for="floatingInput">First Name<span style={{'color':'red'}}>*</span></label>
+                                <input ref={(element) => firstNameField= element} type="text" class="form-control" id="floatingInput" required/>
                             </div>
                             <div class="form-floating mb-3">
-                                <label for="floatingInput">Last Name</label>
-                                <input ref={(element) => lastNameField= element} type="text" class="form-control" id="floatingInput" />
+                                <label for="floatingInput">Last Name<span style={{'color':'red'}}>*</span></label>
+                                <input ref={(element) => lastNameField= element} type="text" class="form-control" id="floatingInput" required/>
                             </div>
                             <div class="form-floating mb-3">
-                                <label for="floatingInput">Username</label>
-                                <input ref={(element) => usernameField= element} type="text" class="form-control" id="floatingInput" />
+                                <label for="floatingInput">Username<span style={{'color':'red'}}>*</span></label>
+                                <input ref={(element) => usernameField= element} type="text" class="form-control" id="floatingInput" required/>
                             </div>
                             <div class="form-floating mb-3">
-                                <label for="floatingInput">Email</label>
-                                <input ref={(element) => emailField= element} type="text" class="form-control" id="floatingInput" />
+                                <label for="floatingInput">Email<span style={{'color':'red'}}>*</span></label>
+                                <input ref={(element) => emailField= element} type="text" class="form-control" id="floatingInput" required/>
                             </div>
                             <div class="form-floating mb-3">
-                                <label for="floatingInput">Password</label>
-                                <input ref={(element) => passwordField= element} type="text" class="form-control" id="floatingInput" />
+                                <label for="floatingPassword">Password<span style={{'color':'red'}}>*</span></label>
+                                <input ref={(element) => passwordField= element} type="password" class="form-control" id="floatingPassword" required/>
+                                <div class="form-text" style={{'color':'red', 'font-size':'smaller'}}> Must be 8-50 character and it must include at least one uppercase letter and one lowercase letter </div>
                             </div>
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">Phone Number</label>

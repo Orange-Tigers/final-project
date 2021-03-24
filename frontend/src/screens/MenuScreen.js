@@ -1,5 +1,4 @@
 
-//Menu Area
 import Menu from '../components/Menu';
 const MenuScreen = () =>{
 
