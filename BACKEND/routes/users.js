@@ -4,7 +4,7 @@ const UsersModel = require('../models/UsersModel')
 const bcryptjs = require('bcryptjs')
 
 
- router.get(
+router.get(
     '/new-account', (req,res) => {
         console.log("login get http")
         res.send("<html><body><h1>hi there im here</h1> this page is for creating new account </body></html>")
@@ -14,8 +14,13 @@ router.post(
     '/new-account', (req, res) =>{
         const formData = {
             username:req.body.username,
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
             email:req.body.email,
-            password:req.body.password
+            password:req.body.password, 
+            avatar:req.body.avatar,
+            phoneNumber:req.body.phoneNumber,
+            address:req.body.address
         };
         const UserModel = new UsersModel (formData)
         bcryptjs.genSalt(

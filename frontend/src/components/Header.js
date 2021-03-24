@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const Header = (props) => {
     return (
@@ -19,14 +20,11 @@ const Header = (props) => {
                       </div>  
                       <div class="main-menu">
                           <ul>
-                              <li class="active"><a href={props.links[0].path}>{props.links[0].label}</a></li>
-                              <li><a href={props.links[1].path}>
-                                     {props.links[1].label}
-                                  </a></li>
-                              <li><a href={props.links[2].path}>
-                                     {props.links[2].label}
-                                  </a></li>
-                          
+                            {
+                                props.links.map( 
+                                    (link) =>(<li><Link to={link.path}>{link.label}</Link></li>)
+                                )
+                            }
                           </ul>
                       </div>
                   </div>

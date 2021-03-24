@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
-
+const cors = require('cors') 
 require('dotenv').config();
 
 
@@ -27,7 +27,7 @@ mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
 )
 
 
-
+server.use(cors())
 
 // Tell express how to use body-parser
 server.use( bodyParser.urlencoded({ extended: false }) );
