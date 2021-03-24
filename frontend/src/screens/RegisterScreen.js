@@ -50,7 +50,7 @@ const RegisterScreen = () =>{
             // 2 Show "sending..." and invoke the fetch()
             set_accountState("sending");
             fetch(
-                'http://localhost:3002/user/new-account', 
+                `${process.env.REACT_APP_BACKEND}/user/new-account`, 
                 {
                     method: 'POST', 
                     headers: {"Content-Type": "application/json"},
@@ -89,7 +89,7 @@ const RegisterScreen = () =>{
             <div className="container">
                 <div className="row d-flex justify-content-center">
                     <div className="card shadow-lg  col-8 m-5 p-5">
-   
+
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">First Name<span style={{'color':'red'}}>*</span></label>
                                 <input ref={(element) => firstNameField= element} type="text" class="form-control" id="floatingInput" required/>

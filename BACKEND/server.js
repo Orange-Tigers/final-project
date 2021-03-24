@@ -42,8 +42,9 @@ server.use(
     '/product', //http://www.myapp.com/product
     products
 )
+const port = process.env.PORT || 3002;
 server.listen(
-    3002, () => {
-        console.log("Server Running on http://localhost:3002/")
+    port, () => {
+        console.log(`Server Running on http://localhost:${port}/`)
     }
 )
