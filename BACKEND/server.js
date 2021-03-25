@@ -4,10 +4,48 @@ const mongoose = require('mongoose')
 const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
+const expressFormData = require('express-form-data')
 const cors = require('cors') 
 require('dotenv').config();
+const passport = require('passport');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const secret = process.env.SECRET;
 
+// Options for passport-jwt
+const passportJwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: secret
+};
 
+// This function is what will read the contents (payload) of the jsonwebtoken
+const passportJwt = (passport) => {
+    passport.use(
+        new JwtStrategy(
+            passportJwtOptions, 
+            (jwtPayload, done) => {
+
+                // Extract and find the user by their id (contained jwt)
+                UsersModel.findOne({ _id: jwtPayload.id })
+                .then(
+                    // If the document was found
+                    (document) => {
+                        return done(null, document);
+                    }
+                )
+                .catch(
+                    // If something went wrong with database search
+                    (err) => {
+                        return done(null, null);
+                    }
+                )
+            }
+        )
+    )
+};
+
+// Invoke passportJwt and pass the passport npm package as argument
+passportJwt(passport);
 //connect to the database using mangoose
 
 ////////to create a user login\\\\\\\\\ 
@@ -33,13 +71,15 @@ server.use(cors())
 server.use( bodyParser.urlencoded({ extended: false }) );
 // Also tell express to recognize JSON
 server.use( bodyParser.json() );
+server.use(expressFormData.parse());
+
 
 server.use(
     '/user', users
 )
 // To user products Route
 server.use(
-    '/product', //http://www.myapp.com/product
+    '/product', passport.authenticate('jwt', {session:false}),
     products
 )
 const port = process.env.PORT || 3002;

@@ -10,7 +10,8 @@ import Footer from './components/Footer';
                 [{'path':'/', 'label':'Home'},
                 {'path':'/about', 'label':'About'},
                 {'path':'/menu', 'label':'Menu'}, 
-                {'path':'/register', 'label':'Register'}]
+                {'path':'/register', 'label':'Register'},
+                {'path':'/login', 'label':'Login'}]
                 }/>
             <Route path={props.path} exact={props.exact} component={props.component}/>
             <Footer logo={"assets/images/logo/logo2.png"}/>

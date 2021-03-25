@@ -5,15 +5,15 @@ const Footer = (props) => {
     return (
   <footer class="footer-area">
   <div class="footer-widget section-padding">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-4">
+      <div class="container-fluid m-0 p-0">
+          <div className="row d-flex justify-content-center" >
+              <div class="col-md-4 d-flex justify-content-center" >
                   <div class="single-widget single-widget1">
                       <a href="#"><img src={props.logo} width="182 px" height="53 px" alt=""/></a>
                       <p class="mt-3">Great taste in every bite.</p>
                   </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4 d-flex justify-content-center" >
                   <div class="single-widget single-widget2 my-5 my-md-0">
                       <h5 class="mb-4">contact us</h5>
                       <div class="d-flex">
@@ -42,7 +42,7 @@ const Footer = (props) => {
                       </div>
                   </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4 d-flex justify-content-center" >
                   <div class="single-widget single-widget3">
                       <h5 class="mb-4">opening hours</h5>
                       <p>Monday ...................... Closed</p>

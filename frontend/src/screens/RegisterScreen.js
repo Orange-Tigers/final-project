@@ -22,10 +22,11 @@ const RegisterScreen = () =>{
     let phoneNumberField;
     let usernameField;
     let addressField;
+    const formData = new FormData();
+
 
     const register = () =>{
         const errors = [];
-        // 1. Validate the fields
         // 1. Validate the fields
         if( firstNameField.value.length === 0 ) {
             errors.push("Please enter your first name")
@@ -49,22 +50,18 @@ const RegisterScreen = () =>{
         else {
             // 2 Show "sending..." and invoke the fetch()
             set_accountState("sending");
+            formData.append('firstName',firstNameField.value); 
+            formData.append('lastName', lastNameField.value) 
+            formData.append('username',usernameField.value)
+            formData.append('email', emailField.value)
+            formData.append('password',passwordField.value)
+            formData.append('phoneNumber', phoneNumberField.value)
+            formData.append('address', addressField.value)
             fetch(
                 `${process.env.REACT_APP_BACKEND}/user/new-account`, 
                 {
                     method: 'POST', 
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(
-                    {
-                        firstName: firstNameField.value, 
-                        lastName: lastNameField.value, 
-                        username:usernameField.value,
-                        email: emailField.value,
-                        password:passwordField.value,
-                        phoneNumber: phoneNumberField.value,
-                        address: addressField.value
-                    }
-                    )
+                    body: formData
                 }
             )
             .then(
@@ -85,10 +82,10 @@ const RegisterScreen = () =>{
     }
     return(
         <div className="container">
-            <h2 style={{'margin-top':'200px', 'color':'black', 'text-align':'center'}}>Create A New Account</h2>
+            <h2 style={{'margin-top':'150px', 'color':'black', 'text-align':'center'}}>Create A New Account</h2>
             <div className="container">
                 <div className="row d-flex justify-content-center">
-                    <div className="card shadow-lg  col-8 m-5 p-5">
+                    <div className="card shadow-lg col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 m-5 p-5">
 
                             <div class="form-floating mb-3">
                                 <label for="floatingInput">First Name<span style={{'color':'red'}}>*</span></label>
@@ -126,22 +123,33 @@ const RegisterScreen = () =>{
                                 accountState === "sending" && <p>Please Wait untill the account is created successfully....... </p>
                             }
                             {
-                                (accountState === "successful") && <div class="alert alert-success">Account Created Successfully</div>
+                                (accountState === "successful") && 
+                                <div>
+                                    <button onClick={register} className="btn btn-primary col-12"><span style={{'font-weight':'bold'}}>CREATE ACCOUNT</span></button>
+                                    <div class="alert alert-success mt-2">Account Created Successfully</div>
+                                </div>
                             }
                             {
-                                (accountState === "unsuccessful") && <div class="alert alert-danger">Error, please try again</div>
+                                (accountState === "unsuccessful") && 
+                                <div>
+                                    <button onClick={register} className="btn btn-primary col-12"><span style={{'font-weight':'bold'}}>CREATE ACCOUNT</span></button>
+                                    <div class="alert alert-danger mt-2">Error, please try again</div>
+                                </div>
                             }
                             {
                                 accountState === "validation failed" &&
-                                    <div className="alert alert-danger">
+                                <div>
+                                    <button onClick={register} className="btn btn-primary col-12"><span style={{'font-weight':'bold'}}>CREATE ACCOUNT</span></button>
+                                    <div className="alert alert-danger mt-2">
                                         <ul>
                                         {
                                             errorsState.map(
-                                                (error) => <li>{error}</li>
+                                                (error) => <li>- {error}</li>
                                             )
                                         }
                                         </ul>
                                     </div>
+                                </div>
                                     
                             }
                     </div>
