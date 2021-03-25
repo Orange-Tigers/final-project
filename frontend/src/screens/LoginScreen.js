@@ -54,8 +54,12 @@ const LoginScreen = () =>{
         .then ((response)=> {
             response.json()
             .then(data =>{
+                if(data.avatar){
+                    localStorage.setItem('avatar', data.avatar)
+                }
                 if(data.jsonwebtoken)
                 {
+                    
                     setLoginState(
                         {
                             reason:'successful'

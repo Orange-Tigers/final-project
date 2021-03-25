@@ -44,7 +44,7 @@ router.post(
                                     //add the url of hte picture to newUserModel
                                     UserModel.avatar = cloudinaryResult.url;
                                     console.log(cloudinaryResult.url)
-                                    
+
                                 }
 
                             )
@@ -109,17 +109,19 @@ router.post(
                                     // Step 6. Send the JWT to the client
                                     const payload = {
                                         id: document.id,
-                                        email: document.email
+                                        email: document.email,
+                                        avatar: document.avatar || ''
                                     };
-
                                     jwt.sign(
                                         payload,
                                         secret,
                                         (err, jsonwebtoken) => {
                                             res.json(
                                                 {
+
                                                     message: 'Login successful',
-                                                    jsonwebtoken: jsonwebtoken
+                                                    jsonwebtoken: jsonwebtoken,
+                                                    avatar:payload.avatar
                                                 }
                                             )
                                         }

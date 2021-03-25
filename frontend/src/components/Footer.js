@@ -9,7 +9,7 @@ const Footer = (props) => {
           <div className="row d-flex justify-content-center" >
               <div class="col-md-4 d-flex justify-content-center" >
                   <div class="single-widget single-widget1">
-                      <a href="#"><img src={props.logo} width="182 px" height="53 px" alt=""/></a>
+                      <a href="/"><img src={props.logo} width="182px" height="53 px" alt=""/></a>
                       <p class="mt-3">Great taste in every bite.</p>
                   </div>
               </div>
