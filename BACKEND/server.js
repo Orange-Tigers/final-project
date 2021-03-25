@@ -79,6 +79,15 @@ mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
 
 
 server.use(cors())
+cloudinary.config(
+    {
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET
+    }
+
+);
+
 
 // Tell express how to use body-parser
 server.use( bodyParser.urlencoded({ extended: false }) );

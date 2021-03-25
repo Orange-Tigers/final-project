@@ -41,9 +41,9 @@ router.post(
                                     if (cloudinaryErr) {
                                         console.log(cloudinaryErr);
                                     }
-                                    else {//add the url of hte picture to newUserModel
+                                    //add the url of hte picture to newUserModel
                                         UsersModel.avatar = cloudinaryResult.url;
-                                    }
+                                    
                                 }
 
                             )
