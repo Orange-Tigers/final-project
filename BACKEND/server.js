@@ -8,6 +8,8 @@ const expressFormData = require('express-form-data')
 const cors = require('cors') 
 require('dotenv').config();
 const passport = require('passport');
+const cloudinary = require('cloudinary').v2
+
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const secret = process.env.SECRET;
@@ -47,6 +49,17 @@ const passportJwt = (passport) => {
 // Invoke passportJwt and pass the passport npm package as argument
 passportJwt(passport);
 //connect to the database using mangoose
+
+ 
+////// config te cloudinary
+cloudinary.config(
+    {
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET
+    }
+
+);
 
 ////////to create a user login\\\\\\\\\ 
 //1. create server and connect to mangodb using mangoose
