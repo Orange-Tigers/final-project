@@ -2,14 +2,13 @@ import React, { useState, useContext } from 'react';
 import AppContext from '../AppContext'
 
 
+
 const LoginScreen = () =>{
 
     const [globalState, setGlobalState] = useContext(AppContext)
     const [loginState, setLoginState]= useState(
         {
-            showErrors: false,
-            loading:false,
-            loginSuccess:false
+            reason:'idle'
         }
     )
 
@@ -29,19 +28,14 @@ const LoginScreen = () =>{
         {
             setLoginState(
                 {
-                    ...loginState,
-                    showErrors:true,
-                    errors:errors,
+                    reason:'invalid'
                 }
             )
         }
         else{
             setLoginState(
                 {
-                    ...loginState,
-                    loading:true,
-                    showErrors:false,
-                    errors:null
+                    reason:'loading'
                 }
             )
         }
@@ -64,9 +58,7 @@ const LoginScreen = () =>{
                 {
                     setLoginState(
                         {
-                            ...loginState,
-                            loading:false,
-                            loginSuccess:true
+                            reason:'successful'
                         }
                     )
                     setGlobalState(
@@ -80,8 +72,7 @@ const LoginScreen = () =>{
                 else{
                     setLoginState(
                         {
-                            ...loginState,
-                            loading:false
+                            reason:'fail'
                         }
                     );
                     console.log("login failed")
@@ -116,23 +107,24 @@ const LoginScreen = () =>{
                             <input ref={(element) => passwordField= element} type="password" class="form-control" id="floatingPassword" required/>
                         </div>
                         {
-                            (!loginState.loading && !loginState.loginSuccess) && <button className="btn btn-primary" onClick={login}>LOGIN</button>
+                            (loginState.reason === 'idle') && <button className="btn btn-primary" onClick={login}>LOGIN</button>
                         }
                         {
-                            (loginState.loading && !loginState.loginSuccess) && <p>Please Wait untill we check your password and email....... </p>
+                            (loginState.reason === 'loading') && <p>Please Wait untill we check your password and email....... </p>
                         }
                         {
-                            (loginState.loginSuccess) &&  
+                            (loginState.reason === 'successful') &&  
                             <div>
                                 <button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
                                 <div class="alert alert-success mt-2">Logged in Successfully</div>
                             </div>
                         }
                         {
-                            (!loginState.loginSuccess && loginState.showErrors) &&  
+                            (loginState.reason === 'fail' || loginState.reason === 'invalid') &&  
                             <div>
                                 <button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
                                 <div class="alert alert-danger mt-2">failed, please try again with different email or/and password</div>
+                                {console.log('failed, please try again with different email or/and password')}
                             </div>
                         }
                 </div>

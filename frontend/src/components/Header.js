@@ -1,9 +1,8 @@
-import React from 'react';
 import {Link} from "react-router-dom";
+
 
 const Header = (props) => {
     return (
-    
       <header class="header-area">
           <div class="container">
               <div class="row">
@@ -22,7 +21,8 @@ const Header = (props) => {
                           <ul>
                             {
                                 props.links.map( 
-                                    (link) =>(<li><Link to={link.path}>{link.label}</Link></li>)
+                                    (link) =>
+                                        (<li><Link to={link.path}>{link.label}</Link></li>)   
                                 )
                             }
                           </ul>
