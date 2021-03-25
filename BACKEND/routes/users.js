@@ -42,7 +42,8 @@ router.post(
                                         console.log(cloudinaryErr);
                                     }
                                     //add the url of hte picture to newUserModel
-                                        UsersModel.avatar = cloudinaryResult.url;
+                                    UserModel.avatar = cloudinaryResult.url;
+                                    console.log(cloudinaryResult.url)
                                     
                                 }
 
