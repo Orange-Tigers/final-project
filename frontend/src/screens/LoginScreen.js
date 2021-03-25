@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AppContext from '../AppContext'
 
 
 const LoginScreen = () =>{
 
-    const [loginState, setLoginState]= useState('idle')
-    const [errState, setErrState] = useState([])
+    const [globalState, setGlobalState] = useContext(AppContext)
+    const [loginState, setLoginState]= useState(
+        {
+            showErrors: false,
+            loading:false,
+            loginSuccess:false
+        }
+    )
 
     let emailField;
     let passwordField;
@@ -12,8 +19,33 @@ const LoginScreen = () =>{
     const formData = new FormData();
     const login =()=>{
     
-        setLoginState('sending')
-        //check if email and password is correct
+        const errors=[];
+        if(emailField.value.length === 0)
+            errors.push("please enter your email")
+        if(passwordField.value.length === 0)
+            errors.push("please enter your password")
+        
+        if(errors.length > 0)
+        {
+            setLoginState(
+                {
+                    ...loginState,
+                    showErrors:true,
+                    errors:errors,
+                }
+            )
+        }
+        else{
+            setLoginState(
+                {
+                    ...loginState,
+                    loading:true,
+                    showErrors:false,
+                    errors:null
+                }
+            )
+        }
+        //setLoginState('sending')
         formData.append('email', emailField.value);
         formData.append('password', passwordField.value);
         fetch(
@@ -26,16 +58,37 @@ const LoginScreen = () =>{
         )
 
         .then ((response)=> {
-            response.json().then(data =>{
+            response.json()
+            .then(data =>{
                 if(data.jsonwebtoken)
                 {
-                    setLoginState('successful')
+                    setLoginState(
+                        {
+                            ...loginState,
+                            loading:false,
+                            loginSuccess:true
+                        }
+                    )
+                    setGlobalState(
+                        {
+                            ...globalState,
+                            loggedIn:true
+                        }
+                    )
+                    localStorage.setItem('jwt', data.jsonwebtoken)
                 }
                 else{
-                    setLoginState('unsuccessful')
+                    setLoginState(
+                        {
+                            ...loginState,
+                            loading:false
+                        }
+                    );
+                    console.log("login failed")
                 }
 
             })
+            .catch(err => console.log(err))
         }
         )
         
@@ -60,23 +113,23 @@ const LoginScreen = () =>{
                         </div>
                         <div class="form-floating mb-3">
                             <label for="floatingPassword">Password</label>
-                            <input ref={(element) => passwordField= element} type="text" class="form-control" id="floating" required/>
+                            <input ref={(element) => passwordField= element} type="password" class="form-control" id="floatingPassword" required/>
                         </div>
                         {
-                            (loginState === 'idle') && <button className="btn btn-primary" onClick={login}>LOGIN</button>
+                            (!loginState.loading && !loginState.loginSuccess) && <button className="btn btn-primary" onClick={login}>LOGIN</button>
                         }
                         {
-                            (loginState === 'sending') && <p>Please Wait untill we check your password and email....... </p>
+                            (loginState.loading && !loginState.loginSuccess) && <p>Please Wait untill we check your password and email....... </p>
                         }
                         {
-                            (loginState === 'successful') &&  
+                            (loginState.loginSuccess) &&  
                             <div>
-                                ><button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
+                                <button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
                                 <div class="alert alert-success mt-2">Logged in Successfully</div>
                             </div>
                         }
                         {
-                            (loginState === 'unsuccessful') &&  
+                            (!loginState.loginSuccess && loginState.showErrors) &&  
                             <div>
                                 <button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
                                 <div class="alert alert-danger mt-2">failed, please try again with different email or/and password</div>
