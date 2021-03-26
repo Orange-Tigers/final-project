@@ -110,6 +110,7 @@ router.post(
                                     const payload = {
                                         id: document.id,
                                         email: document.email,
+                                        username: document.firstName + document.lastName,
                                         avatar: document.avatar || ''
                                     };
                                     jwt.sign(
@@ -121,7 +122,7 @@ router.post(
 
                                                     message: 'Login successful',
                                                     jsonwebtoken: jsonwebtoken,
-                                                    avatar:payload.avatar
+                                                    user: payload
                                                 }
                                             )
                                         }

@@ -72,7 +72,6 @@ router.post(
 router.get(
     '/list',                 
     (req, res) => {
-
         ProductsModel
         .find()
         .then(

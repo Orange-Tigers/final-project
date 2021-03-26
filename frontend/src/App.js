@@ -1,6 +1,7 @@
 import React from 'react';
-import {BrowserRouter as Router ,Switch}from "react-router-dom";
-import {useState} from 'react'
+import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { useState } from 'react'
+import { useHistory } from "react-router-dom";
 
 
 import LayoutRoute from './LayoutRoute';
@@ -19,23 +20,24 @@ function App() {
   const [globalState, setGlobalState] = useState(
     {
       loggedIn: localStorage.getItem('jwt') ? true : false,
+      user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {},
       profile: null
     }
   )
-   
+
 
   return (
     <div>
       <AppContext.Provider value={[globalState, setGlobalState]}>
         <Router>
           <Switch>
-            <LayoutRoute path="/" component={HomeScreen} exact={true}/>
-            <LayoutRoute path="/about" component={AboutScreen} exact={true}/>
-            <LayoutRoute path="/menu" component={MenuScreen} exact={true}/>
-            <LayoutRoute path="/register" component={RegisterScreen} exact={true}/>
-            <LayoutRoute path="/login" component={LoginScreen} exact={true}/>
-            <LayoutRoute path="/logout" component={LogoutScreen} exact={true}/>
-            <LayoutRoute path="/update-password" component={UpdatePasswordScreen} exact={true}/>
+            <LayoutRoute path="/" component={HomeScreen} exact={true} />
+            <LayoutRoute path="/about" component={AboutScreen} exact={true} />
+            <LayoutRoute path="/menu" component={MenuScreen} exact={true} />
+            <LayoutRoute path="/register" component={RegisterScreen} exact={true} />
+            <LayoutRoute path="/login" component={LoginScreen} exact={true} />
+            <LayoutRoute path="/logout" component={LogoutScreen} exact={true} />
+            <LayoutRoute path="/update-password" component={UpdatePasswordScreen} exact={true} />
           </Switch>
         </Router>
       </AppContext.Provider>

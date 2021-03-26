@@ -1,16 +1,21 @@
 import { useContext } from 'react'
 import AppContext from '../AppContext'
+import { useHistory } from "react-router-dom";
+
 const LogoutScreen = () => {
     const [globalState, setGlobalState] = useContext(AppContext);
+    const history = useHistory();
 
     console.log(globalState.loggedIn)
     const logout = () => {
-        localStorage.removeItem('jwt')
-        localStorage.removeItem('avatar')
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('user');
+        history.push('/')
         setGlobalState(
             {
                 ...globalState,
-                loggedIn: false
+                loggedIn: false,
+                user: {}
             }
         )
     }

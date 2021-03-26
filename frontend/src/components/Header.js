@@ -6,13 +6,14 @@ import AppContext from '../AppContext'
 
 const Header = (props) => {
     const [globalState, setGlobalState] = useContext(AppContext);
+    console.log(globalState);
 
     return (
 
         <header className="header-area">
             <div className="container">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div className="col-lg-2">
                         <div class="logo-area">
                             <a href="/"><img src={props.logo} width="159 px" height="49 px" alt="logo" /></a>
                         </div>
@@ -28,10 +29,21 @@ const Header = (props) => {
                                 {
                                     props.links.map(
                                         (link, index) => (<li key={index}>
-                                            <Link to={link.path}> {
-                                                (globalState.loggedIn  && link.label == 'Logout') ?
-                                                <img className="user-avatar" src={( localStorage.getItem('avatar')) ? localStorage.getItem('avatar') : '/assets/images/user.svg' } /> :''}{link.label}</Link></li>)
+                                            <Link to={link.path}> {link.label}</Link></li>)
                                     )
+
+                                }
+                                {(globalState.loggedIn) ?
+                                    <li className="dropdown"><a href="#"><img className="user-avatar" src={globalState.user.avatar} /> {globalState.user.username}</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="/logout">Logout</a></li>
+                                        </ul>
+                                    </li>
+                                    : <li className="dropdown"><a href="/login">Login</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="/Register">Register</a></li>
+                                        </ul>
+                                    </li>
                                 }
                             </ul>
                         </div>

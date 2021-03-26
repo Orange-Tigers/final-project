@@ -5,7 +5,7 @@ const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
 const expressFormData = require('express-form-data')
-const cors = require('cors') 
+const cors = require('cors')
 require('dotenv').config();
 const passport = require('passport');
 const cloudinary = require('cloudinary').v2
@@ -22,25 +22,28 @@ const passportJwtOptions = {
 
 // This function is what will read the contents (payload) of the jsonwebtoken
 const passportJwt = (passport) => {
+    console.log('in server')
     passport.use(
         new JwtStrategy(
-            passportJwtOptions, 
+            passportJwtOptions,
             (jwtPayload, done) => {
 
                 // Extract and find the user by their id (contained jwt)
                 UsersModel.findOne({ _id: jwtPayload.id })
-                .then(
-                    // If the document was found
-                    (document) => {
-                        return done(null, document);
-                    }
-                )
-                .catch(
-                    // If something went wrong with database search
-                    (err) => {
-                        return done(null, null);
-                    }
-                )
+                    .then(
+                        // If the document was found
+                        (document) => {
+                            console.log('hello there in Found ');
+                            return done(null, document);
+                        }
+                    )
+                    .catch(
+                        // If something went wrong with database search
+                        (err) => {
+                            console.log('hello there ')
+                            return done(null, null);
+                        }
+                    )
             }
         )
     )
@@ -50,7 +53,7 @@ const passportJwt = (passport) => {
 passportJwt(passport);
 //connect to the database using mangoose
 
- 
+
 ////// config te cloudinary
 cloudinary.config(
     {
@@ -63,19 +66,19 @@ cloudinary.config(
 
 ////////to create a user login\\\\\\\\\ 
 //1. create server and connect to mangodb using mangoose
-const connectionConfig= {useNewUrlParser:true, useUnifiedTopology:true};
+const connectionConfig = { useNewUrlParser: true, useUnifiedTopology: true };
 mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
-.then(
-    (dbDocument) => {
-        console.log('DB is connected')
-    }
-)
-.catch(
-    (error) => {
-        console.log('error occured', error)
+    .then(
+        (dbDocument) => {
+            console.log('DB is connected')
+        }
+    )
+    .catch(
+        (error) => {
+            console.log('error occured', error)
 
-    }
-)
+        }
+    )
 
 
 server.use(cors())
@@ -90,9 +93,9 @@ cloudinary.config(
 
 
 // Tell express how to use body-parser
-server.use( bodyParser.urlencoded({ extended: false }) );
+server.use(bodyParser.urlencoded({ extended: false }));
 // Also tell express to recognize JSON
-server.use( bodyParser.json() );
+server.use(bodyParser.json());
 server.use(expressFormData.parse());
 
 
@@ -101,7 +104,7 @@ server.use(
 )
 // To user products Route
 server.use(
-    '/product', passport.authenticate('jwt', {session:false}),
+    '/product',
     products
 )
 const port = process.env.PORT || 3002;
