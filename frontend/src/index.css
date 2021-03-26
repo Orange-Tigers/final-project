@@ -19,3 +19,28 @@ code {
   height: 20px;
   margin-right: 7px;
 }
+
+input{
+  background-color: white;
+}
+
+.react-time-picker__wrapper {
+  border: 0;
+}
+
+.react-time-picker {
+  background: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  height: 100%;
+}
+.react-time-picker__wrapper{
+  border:0  !important
+}
+.header-area{
+  z-index: 5;
+}

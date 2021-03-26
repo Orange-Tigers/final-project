@@ -95,7 +95,7 @@ const LoginScreen = () =>{
         <h2 style={{'margin-top':'200px', 'color':'black', 'text-align':'center'}}>Login to your Account</h2>
         <div className="container">
             <div className="row d-flex justify-content-center">
-                <div className="card shadow-lg col-xl-8 col-lg-8 col-md-8 col-sm-12 col-12 m-5 p-5">
+                <div className="card shadow-lg col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 m-5 p-5">
 
                         <div class="form-floating mb-3">
                             <label for="floatingInput">Email</label>

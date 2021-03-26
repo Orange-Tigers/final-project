@@ -13,6 +13,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen'
 import LogoutScreen from './screens/LogoutScreen'
 import UpdatePasswordScreen from './screens/UpdatePasswordScreen'
+import ReserveTableScreen from './screens/ReserveTableScreen'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
             <LayoutRoute path="/login" component={LoginScreen} exact={true}/>
             <LayoutRoute path="/logout" component={LogoutScreen} exact={true}/>
             <LayoutRoute path="/update-password" component={UpdatePasswordScreen} exact={true}/>
+            <LayoutRoute path="/reserve-table" component={ReserveTableScreen} exact={true}/>
           </Switch>
         </Router>
       </AppContext.Provider>

@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
+const reservations = require('./routes/reservations.js')
 const expressFormData = require('express-form-data')
 const cors = require('cors') 
 require('dotenv').config();
@@ -95,15 +96,22 @@ server.use( bodyParser.urlencoded({ extended: false }) );
 server.use( bodyParser.json() );
 server.use(expressFormData.parse());
 
+server.use(cors())
 
 server.use(
     '/user', users
 )
 // To user products Route
 server.use(
-    '/product', passport.authenticate('jwt', {session:false}),
+    '/product',
     products
 )
+
+server.use(
+    '/reserve-table',
+    reservations
+)
+
 const port = process.env.PORT || 3002;
 server.listen(
     port, () => {
