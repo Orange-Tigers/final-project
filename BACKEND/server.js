@@ -8,6 +8,8 @@ const expressFormData = require('express-form-data')
 const cors = require('cors') 
 require('dotenv').config();
 const passport = require('passport');
+const cloudinary = require('cloudinary').v2
+
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const secret = process.env.SECRET;
@@ -48,6 +50,17 @@ const passportJwt = (passport) => {
 passportJwt(passport);
 //connect to the database using mangoose
 
+ 
+////// config te cloudinary
+cloudinary.config(
+    {
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET
+    }
+
+);
+
 ////////to create a user login\\\\\\\\\ 
 //1. create server and connect to mangodb using mangoose
 const connectionConfig= {useNewUrlParser:true, useUnifiedTopology:true};
@@ -66,6 +79,15 @@ mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
 
 
 server.use(cors())
+cloudinary.config(
+    {
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET
+    }
+
+);
+
 
 // Tell express how to use body-parser
 server.use( bodyParser.urlencoded({ extended: false }) );
