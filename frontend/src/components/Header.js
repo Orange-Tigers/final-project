@@ -38,13 +38,14 @@ const Header = (props) => {
                                         <ul class="sub-menu">
                                             <li><a href="/wishlist">Wishlist</a></li>
                                             <li><a href="/logout">Logout</a></li>
+                                            <li><a href="/update-profile">update account</a></li>
                                         </ul>
                                     </li>
                                     : <li className="dropdown"><a href="/login">Login</a>
                                         <ul class="sub-menu">
                                             <li><a href="/Register">Register</a></li>
                                         </ul>
-                                    </li>
+                                    </li>                                    
                                 }
                             </ul>
                         </div>

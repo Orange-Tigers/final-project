@@ -130,7 +130,7 @@ const RegisterScreen = () => {
                             <label for="address" Address>Address</label>
                             <input ref={(element) => addressField = element} type="text" class="form-control" id="address" />
                         </div>
-                        <div class="custom-file">
+                        <div className="custom-file mb-3">
                             <input onChange={attachFile} type="file" class="custom-file-input" id="avatar" />
                             <label class="custom-file-label" for="avatar">Choose file</label>
                         </div>

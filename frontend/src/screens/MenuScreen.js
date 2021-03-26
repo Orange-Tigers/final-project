@@ -17,6 +17,7 @@ function MenuScreen() {
         .then(
           (result) => {
             setIsLoaded(true);
+            console.log(result)
             setItems(result);
           },
           // Note: it's important to handle errors here

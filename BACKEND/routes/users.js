@@ -110,7 +110,11 @@ router.post(
                                     const payload = {
                                         id: document.id,
                                         email: document.email,
-                                        username: document.firstName + document.lastName,
+                                        username: document.username,
+                                        firstName:document.firstName,
+                                        lastName:document.lastName,
+                                        phoneNumber: document.phoneNumber,
+                                        address: document.address,
                                         avatar: document.avatar || ''
                                     };
                                     jwt.sign(
@@ -177,4 +181,100 @@ router.post(
     }
 )
 
+
+
+
+
+
+router.post(
+    //req.body.email
+    '/update-profile', (req, res) => {
+        UsersModel.findOne({ email:req.body.email })
+            .then(
+                async (UserFound) => {
+                if (!UserFound)
+                    res.send('this account is not created. Enter the Email used for this account')
+                else {
+                    if (Object.values(req.files).length > 0) {
+                        const files = Object.values(req.files);
+
+                        await cloudinary.uploader.upload(
+                            files[0].path,
+                            (cloudinaryErr, cloudinaryResult) => {
+                                //add the url of the picture to new user model
+                                if (cloudinaryErr) {
+                                    console.log(cloudinaryErr);
+                                }
+                                //add the url of hte picture to newUserModel
+                                UserModel.avatar = cloudinaryResult.url;
+                                console.log(cloudinaryResult.url)
+
+                            }
+
+                        )
+                    }
+
+                    bcryptjs.genSalt(
+                        (err, salt) => {
+                            bcryptjs.hash(
+                                req.body.password, salt, (err, EncryptedPassword) => {
+                                    UserFound.password = EncryptedPassword,
+                                    UserFound.username = req.body.username,
+                                    UserFound.firstName = req.body.firstName,
+                                    UserFound.lastName = req.body.lastName,
+                                    UserFound.email = req.body.email,
+                                    UserFound.avatar = req.body.avatar,
+                                    UserFound.phoneNumber = req.body.phoneNumber,
+                                    UserFound.address = req.body.address;
+                                    UserFound.save()
+                                        .then
+                                        (
+                                            dbDocument =>
+                                                { console.log(dbDocument)
+                                                    res.send("<h1>password is updated successfully</h1>")}
+                                        )
+                                        .catch(
+                                            err =>
+                                                res.send(err)
+
+                                        )
+                                }
+                            )
+                        }
+                    )
+                    // other updates
+
+                }
+                const payload = {
+                    id: document.id,
+                    email: document.email,
+                    username: document.username,
+                    firstName:document.firstName,
+                    lastName:document.lastName,
+                    phoneNumber: document.phoneNumber,
+                    address: document.address,
+                    avatar: document.avatar || ''
+                };
+                jwt.sign(
+                    payload,
+                    secret,
+                    (err, jsonwebtoken) => {
+                        res.json(
+                            {
+
+                                message: 'update successful',
+                                jsonwebtoken: jsonwebtoken,
+                                user: payload
+                            }
+                        )
+                    }
+                )
+
+
+            }
+
+            )
+            .catch((err) => res.send("the user is not found"))
+    }
+)
 module.exports = router

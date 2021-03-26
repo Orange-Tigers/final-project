@@ -5,6 +5,7 @@ const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
 const wishlist = require('./routes/wishlist.js')
+const reservations = require('./routes/reservations.js')
 const expressFormData = require('express-form-data')
 const cors = require('cors')
 require('dotenv').config();
@@ -96,6 +97,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 server.use(expressFormData.parse());
 
+server.use(cors())
 
 server.use(
     '/user', users
@@ -109,6 +111,11 @@ server.use(
 server.use(
     '/wishlist',
     wishlist
+)
+
+server.use(
+    '/reserve-table',
+    reservations
 )
 
 const port = process.env.PORT || 3002;
