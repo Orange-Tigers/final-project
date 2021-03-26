@@ -34,6 +34,7 @@ function App() {
             <LayoutRoute path="/" component={HomeScreen} exact={true} />
             <LayoutRoute path="/about" component={AboutScreen} exact={true} />
             <LayoutRoute path="/menu" component={MenuScreen} exact={true} />
+            <LayoutRoute path="/contact" component={ContactForm} exact={true}/>
             <LayoutRoute path="/register" component={RegisterScreen} exact={true} />
             <LayoutRoute path="/login" component={LoginScreen} exact={true} />
             <LayoutRoute path="/logout" component={LogoutScreen} exact={true} />
