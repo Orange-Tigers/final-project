@@ -34,7 +34,7 @@ const Header = (props) => {
 
                                 }
                                 {(globalState.loggedIn) ?
-                                    <li className="dropdown"><a href="#"><img className="user-avatar" src={globalState.user.avatar} /> {globalState.user.username}</a>
+                                    <li className="dropdown"><a href="#"><img className="user-avatar" src={globalState.user.avatar? globalState.user.avatar : '/assets/images/user.svg' } /> {globalState.user.username}</a>
                                         <ul class="sub-menu">
                                             <li><a href="/wishlist">Wishlist</a></li>
                                             <li><a href="/logout">Logout</a></li>
