@@ -14,6 +14,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen'
 import LogoutScreen from './screens/LogoutScreen'
 import UpdatePasswordScreen from './screens/UpdatePasswordScreen'
+import ContactUs from './screens/ContactUs';
 
 function App() {
 
@@ -34,7 +35,7 @@ function App() {
             <LayoutRoute path="/" component={HomeScreen} exact={true} />
             <LayoutRoute path="/about" component={AboutScreen} exact={true} />
             <LayoutRoute path="/menu" component={MenuScreen} exact={true} />
-            <LayoutRoute path="/contact" component={ContactForm} exact={true}/>
+            <LayoutRoute path="/contact" component={ContactUs} exact={true}/>
             <LayoutRoute path="/register" component={RegisterScreen} exact={true} />
             <LayoutRoute path="/login" component={LoginScreen} exact={true} />
             <LayoutRoute path="/logout" component={LogoutScreen} exact={true} />
