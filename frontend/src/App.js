@@ -6,14 +6,16 @@ import { useHistory } from "react-router-dom";
 
 import LayoutRoute from './LayoutRoute';
 import AppContext from './AppContext';
-
 import HomeScreen from './screens/HomeScreen';
 import AboutScreen from './screens/AboutScreen';
 import MenuScreen from './screens/MenuScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen'
 import LogoutScreen from './screens/LogoutScreen'
-import UpdatePasswordScreen from './screens/UpdatePasswordScreen'
+import UpdatePasswordScreen from './screens/UpdatePasswordScreen';
+
+import UpdateProfileScreen from './screens/UpdateProfileScreen';
+
 
 function App() {
 
@@ -38,6 +40,7 @@ function App() {
             <LayoutRoute path="/login" component={LoginScreen} exact={true} />
             <LayoutRoute path="/logout" component={LogoutScreen} exact={true} />
             <LayoutRoute path="/update-password" component={UpdatePasswordScreen} exact={true} />
+            <LayoutRoute path="/update-profile" component={UpdateProfileScreen} exact={true} />
           </Switch>
         </Router>
       </AppContext.Provider>

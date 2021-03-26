@@ -37,13 +37,14 @@ const Header = (props) => {
                                     <li className="dropdown"><a href="#"><img className="user-avatar" src={globalState.user.avatar} /> {globalState.user.username}</a>
                                         <ul class="sub-menu">
                                             <li><a href="/logout">Logout</a></li>
+                                            <li><a href="/update-profile">update account</a></li>
                                         </ul>
                                     </li>
                                     : <li className="dropdown"><a href="/login">Login</a>
                                         <ul class="sub-menu">
                                             <li><a href="/Register">Register</a></li>
                                         </ul>
-                                    </li>
+                                    </li>                                    
                                 }
                             </ul>
                         </div>
