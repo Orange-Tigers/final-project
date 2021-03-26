@@ -1,45 +1,46 @@
 import React, { useState, useContext } from 'react';
 import AppContext from '../AppContext'
+import {Link} from 'react-router-dom'
 
 
+const validateEmail = (email) => {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
 const LoginScreen = () =>{
 
     const [globalState, setGlobalState] = useContext(AppContext)
-    const [loginState, setLoginState]= useState(
-        {
-            reason:'idle'
-        }
-    )
+    const [loginState, setLoginState]= useState("idle")
+
 
     let emailField;
     let passwordField;
+    const errors=[];
 
     const formData = new FormData();
     const login =()=>{
     
-        const errors=[];
+        
         if(emailField.value.length === 0)
             errors.push("please enter your email")
+        if(validateEmail(emailField.value) === false)
+            errors.push("please enter a valid email")
+        
         if(passwordField.value.length === 0)
             errors.push("please enter your password")
-        
+            
         if(errors.length > 0)
         {
-            setLoginState(
-                {
-                    reason:'invalid'
-                }
-            )
+            setLoginState("fail")
+            console.log('state is ', loginState)
+               
         }
         else{
-            setLoginState(
-                {
-                    reason:'loading'
-                }
-            )
+            setLoginState("loading")
+            console.log("state is ", loginState)
+                
         }
-        //setLoginState('sending')
         formData.append('email', emailField.value);
         formData.append('password', passwordField.value);
         fetch(
@@ -56,11 +57,7 @@ const LoginScreen = () =>{
             .then(data =>{
                 if(data.jsonwebtoken)
                 {
-                    setLoginState(
-                        {
-                            reason:'successful'
-                        }
-                    )
+                    setLoginState("successful")
                     setGlobalState(
                         {
                             ...globalState,
@@ -68,14 +65,11 @@ const LoginScreen = () =>{
                         }
                     )
                     localStorage.setItem('jwt', data.jsonwebtoken)
+                    console.log('state is ', loginState)
                 }
                 else{
-                    setLoginState(
-                        {
-                            reason:'fail'
-                        }
-                    );
-                    console.log("login failed")
+                    setLoginState("fail")
+                    console.log('state is ', loginState)
                 }
 
             })
@@ -105,22 +99,23 @@ const LoginScreen = () =>{
                         <div class="form-floating mb-3">
                             <label for="floatingPassword">Password</label>
                             <input ref={(element) => passwordField= element} type="password" class="form-control" id="floatingPassword" required/>
+                            <Link to= {`/update-password`} > did you want to reset your password</Link>
                         </div>
                         {
-                            (loginState.reason === 'idle') && <button className="btn btn-primary" onClick={login}>LOGIN</button>
+                            (loginState === "idle") && <button className="btn btn-primary" onClick={login}>LOGIN</button>
                         }
                         {
-                            (loginState.reason === 'loading') && <p>Please Wait untill we check your password and email....... </p>
+                            (loginState === "loading") && <p>Please Wait untill we check your password and email....... </p>
                         }
                         {
-                            (loginState.reason === 'successful') &&  
+                            (loginState === "successful") &&  
                             <div>
                                 <button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
                                 <div class="alert alert-success mt-2">Logged in Successfully</div>
                             </div>
                         }
                         {
-                            (loginState.reason === 'fail' || loginState.reason === 'invalid') &&  
+                            (loginState === "fail" && loginState !== "successful") && 
                             <div>
                                 <button className="btn btn-primary col-12" onClick={login}>LOGIN</button>
                                 <div class="alert alert-danger mt-2">failed, please try again with different email or/and password</div>

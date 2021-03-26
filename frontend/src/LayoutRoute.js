@@ -46,7 +46,6 @@ import AppContext from './AppContext'
       }
 
     }
-    
       return(
         <div>
             <Header logo={"assets/images/logo/logo.png"} 

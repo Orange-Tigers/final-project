@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router ,Switch}from "react-router-dom";
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 
 
 import LayoutRoute from './LayoutRoute';
@@ -12,6 +12,7 @@ import MenuScreen from './screens/MenuScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen'
 import LogoutScreen from './screens/LogoutScreen'
+import UpdatePasswordScreen from './screens/UpdatePasswordScreen'
 
 function App() {
 
@@ -21,43 +22,7 @@ function App() {
       profile: null
     }
   )
-   useEffect(
-     () => {
-      //  if there is a token and globalState.profile is null
-       if( !localStorage.getItem('jwt') && globalState.profile === null) {
-
-
-        //  fetch GET to get profile details
-          /*etch(
-            'http://localhost:3001/users/profile',
-            {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-              }
-            }
-          )
-          .then(
-            (backendResponse) => backendResponse.json()
-          )
-          .then(
-            (json) => {
-              console.log('user\'s profile', json)
-              // update the globalState
-              setGlobalState(
-                {
-                  ...globalState,
-                  profile: json
-                }
-              )
-            }
-          ).catch(
-            error => console.log(error)
-          )*/
-       }
-     },
-     [ globalState.loggedIn ]
-   )
+   
 
   return (
     <div>
@@ -70,6 +35,7 @@ function App() {
             <LayoutRoute path="/register" component={RegisterScreen} exact={true}/>
             <LayoutRoute path="/login" component={LoginScreen} exact={true}/>
             <LayoutRoute path="/logout" component={LogoutScreen} exact={true}/>
+            <LayoutRoute path="/update-password" component={UpdatePasswordScreen} exact={true}/>
           </Switch>
         </Router>
       </AppContext.Provider>
