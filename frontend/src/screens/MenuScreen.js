@@ -1,6 +1,6 @@
 
 import Menu from '../components/Menu';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 
                 
 function MenuScreen() {
@@ -53,7 +53,7 @@ function MenuScreen() {
                         {
                             items.map(
                            item => {
-                                return <div class="col-md-4 col-sm-6"> {<Menu image = {item.imageurl} title= {item.productname} details ={item.details} price = {item.price
+                                return <div class="col-md-4 col-sm-6"> {<Menu productId= {item._id} image = {item.imageurl} title= {item.productname} details ={item.details} price = {item.price
 } />} </div>
                             }
                             )

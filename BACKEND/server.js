@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const users = require('./routes/users.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
+const wishlist = require('./routes/wishlist.js')
 const expressFormData = require('express-form-data')
 const cors = require('cors')
 require('dotenv').config();
@@ -22,7 +23,6 @@ const passportJwtOptions = {
 
 // This function is what will read the contents (payload) of the jsonwebtoken
 const passportJwt = (passport) => {
-    console.log('in server')
     passport.use(
         new JwtStrategy(
             passportJwtOptions,
@@ -33,14 +33,12 @@ const passportJwt = (passport) => {
                     .then(
                         // If the document was found
                         (document) => {
-                            console.log('hello there in Found ');
                             return done(null, document);
                         }
                     )
                     .catch(
                         // If something went wrong with database search
                         (err) => {
-                            console.log('hello there ')
                             return done(null, null);
                         }
                     )
@@ -107,6 +105,12 @@ server.use(
     '/product',
     products
 )
+
+server.use(
+    '/wishlist',
+    wishlist
+)
+
 const port = process.env.PORT || 3002;
 server.listen(
     port, () => {
