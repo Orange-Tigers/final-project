@@ -2,6 +2,7 @@ const express = require('express')
 const server = express()
 const mongoose = require('mongoose')
 const users = require('./routes/users.js')
+const admins = require('./routes/admins.js')
 const bodyParser = require('body-parser')
 const products = require('./routes/products.js')
 const wishlist = require('./routes/wishlist.js')
@@ -81,14 +82,6 @@ mongoose.connect(process.env.CONNECTION_STRING, connectionConfig)
 
 
 server.use(cors())
-cloudinary.config(
-    {
-        cloud_name: process.env.CLOUD_NAME,
-        api_key: process.env.API_KEY,
-        api_secret: process.env.API_SECRET
-    }
-
-);
 
 
 // Tell express how to use body-parser
@@ -98,6 +91,8 @@ server.use(bodyParser.json());
 server.use(expressFormData.parse());
 
 server.use(cors())
+
+
 
 server.use(
     '/user', users
@@ -117,7 +112,9 @@ server.use(
     '/reserve-table',
     reservations
 )
-
+server.use(
+    '/admin', admins
+)
 const port = process.env.PORT || 3002;
 server.listen(
     port, () => {

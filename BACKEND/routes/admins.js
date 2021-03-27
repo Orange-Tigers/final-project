@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const UsersModel = require('../models/UsersModel')
+const AdminsModel = require('../models/AdminsModel')
 const bcryptjs = require('bcryptjs')
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
@@ -8,7 +8,7 @@ const secret = process.env.SECRET;
 const cloudinary = require('cloudinary').v2
 
 router.post(
-    '/new-account', (req, res) => {
+    '/add', (req, res) => {
         const formData = {
             username: req.body.username,
             firstName: req.body.firstName,
@@ -19,8 +19,8 @@ router.post(
             phoneNumber: req.body.phoneNumber,
             address: req.body.address,
         };
-        const UserModel = new UsersModel(formData)
-        UsersModel
+        const AdminModel = new AdminsModel(formData)
+        AdminsModel
             .findOne({ email: formData.email })
             .then(
                 async (dbDocument) => {
@@ -42,7 +42,7 @@ router.post(
                                         console.log(cloudinaryErr);
                                     }
                                     //add the url of hte picture to newUserModel
-                                    UserModel.avatar = cloudinaryResult.url;
+                                    AdminModel.avatar = cloudinaryResult.url;
                                     console.log(cloudinaryResult.url)
 
                                 }
@@ -54,8 +54,8 @@ router.post(
                             (err, salt) => {
                                 bcryptjs.hash(
                                     formData.password, salt, (err, EncryptedPassword) => {
-                                        UserModel.password = EncryptedPassword;
-                                        UserModel.save()
+                                        AdminModel.password = EncryptedPassword;
+                                        AdminModel.save()
                                             .then
                                             (
                                                 dbDocument =>
@@ -87,7 +87,7 @@ router.post(
         };
 
         // Step 2a. In database, find account that matches email
-        UsersModel.findOne(
+        AdminsModel.findOne(
             { email: formData.email },
             (err, document) => {
 
@@ -110,11 +110,6 @@ router.post(
                                     const payload = {
                                         id: document.id,
                                         email: document.email,
-                                        username: document.username,
-                                        firstName:document.firstName,
-                                        lastName:document.lastName,
-                                        phoneNumber: document.phoneNumber,
-                                        address: document.address,
                                         avatar: document.avatar || ''
                                     };
                                     jwt.sign(
@@ -126,7 +121,7 @@ router.post(
 
                                                     message: 'Login successful',
                                                     jsonwebtoken: jsonwebtoken,
-                                                    user: payload
+                                                    avatar:payload.avatar
                                                 }
                                             )
                                         }
@@ -147,9 +142,9 @@ router.post(
 )
 router.post(
     '/update', (req, res) => {
-        UsersModel.findOne({ email: req.body.email })
+        AdminsModel.findOne({ email: req.body.email })
             .then(UserFound => {
-                if (!UserFound)
+                if (!AdminFound)
                     res.send('this account is not created. Enter the Email used for this account')
                 else {
                     bcryptjs.genSalt(
@@ -177,110 +172,15 @@ router.post(
             }
 
             )
-            .catch((err) => res.send("the user is not found"))
+            .catch((err) => res.send("the  is not found"))
     }
 )
 
-
-
-
-
-
-router.post(
-    //req.body.email
-    '/update-profile', (req, res) => {
-        UsersModel.findOne({ email:req.body.email })
-            .then(
-                async (UserFound) => {
-                if (!UserFound)
-                    res.send('this account is not created. Enter the Email used for this account')
-                else {
-                    if (Object.values(req.files).length > 0) {
-                        const files = Object.values(req.files);
-
-                        await cloudinary.uploader.upload(
-                            files[0].path,
-                            (cloudinaryErr, cloudinaryResult) => {
-                                //add the url of the picture to new user model
-                                if (cloudinaryErr) {
-                                    console.log(cloudinaryErr);
-                                }
-                                //add the url of hte picture to newUserModel
-                                UserModel.avatar = cloudinaryResult.url;
-                                console.log(cloudinaryResult.url)
-
-                            }
-
-                        )
-                    }
-
-                    bcryptjs.genSalt(
-                        (err, salt) => {
-                            bcryptjs.hash(
-                                req.body.password, salt, (err, EncryptedPassword) => {
-                                    UserFound.password = EncryptedPassword,
-                                    UserFound.username = req.body.username,
-                                    UserFound.firstName = req.body.firstName,
-                                    UserFound.lastName = req.body.lastName,
-                                    UserFound.email = req.body.email,
-                                    UserFound.avatar = req.body.avatar,
-                                    UserFound.phoneNumber = req.body.phoneNumber,
-                                    UserFound.address = req.body.address;
-                                    UserFound.save()
-                                        .then
-                                        (
-                                            dbDocument =>
-                                                { console.log(dbDocument)
-                                                    res.send("<h1>password is updated successfully</h1>")}
-                                        )
-                                        .catch(
-                                            err =>
-                                                res.send(err)
-
-                                        )
-                                }
-                            )
-                        }
-                    )
-                    // other updates
-
-                }
-                const payload = {
-                    id: document.id,
-                    email: document.email,
-                    username: document.username,
-                    firstName:document.firstName,
-                    lastName:document.lastName,
-                    phoneNumber: document.phoneNumber,
-                    address: document.address,
-                    avatar: document.avatar || ''
-                };
-                jwt.sign(
-                    payload,
-                    secret,
-                    (err, jsonwebtoken) => {
-                        res.json(
-                            {
-
-                                message: 'update successful',
-                                jsonwebtoken: jsonwebtoken,
-                                user: payload
-                            }
-                        )
-                    }
-                )
-
-
-            }
-
-            )
-            .catch((err) => res.send("the user is not found"))
-    }
-)
 router.get(
     '/list',                 
     (req, res) => {
-        UsersModel
+
+        AdminsModel
         .find()
         .then(
             (dbDocuments) => {

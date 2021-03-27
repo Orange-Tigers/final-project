@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const opts = { toJSON: { virtuals: true } };
 const ReservationsSchema = new mongoose.Schema(
     {
         name:{
@@ -16,6 +17,6 @@ const ReservationsSchema = new mongoose.Schema(
         }
         
     }
-)
+    , opts)
 const ReservationsModel = new mongoose.model('reservations', ReservationsSchema)
 module.exports = ReservationsModel

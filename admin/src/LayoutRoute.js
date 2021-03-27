@@ -16,7 +16,7 @@ import AppContext from './AppContext';
           {'path':'/menulist', 'label':'Menu'}, 
           {'path':'/newproduct', 'label':'New Product'}, 
           {'path':'/userslist', 'label':'Users'}, 
-          {'path':'/register', 'label':'Register'},
+          {'path':'/register', 'label':'New Admin'},
           {'path':'/adminslist', 'label':'Admins'}, 
           {'path': '/logout', 'label':'Logout'}]
       }
@@ -34,7 +34,7 @@ import AppContext from './AppContext';
           {'path':'/menulist', 'label':'Menu'}, 
           {'path':'/newproduct', 'label':'New Product'}, 
           {'path':'/userslist', 'label':'Users'}, 
-          {'path':'/register', 'label':'Register'},
+          {'path':'/register', 'label':'New Admin'},
           {'path':'/adminslist', 'label':'Admins'},  
           {'path': '/logout', 'label':'Logout'}]
       }

@@ -95,10 +95,7 @@ const AddProductScreen = () => {
                             <label for="productPrice">Product price<span style={{ 'color': 'red' }}>*</span></label>
                             <input ref={(element) => productPrice = element} type="text" class="form-control" id="productPrice" required />
                         </div>
-                        <div class="form-floating mb-3">
-                            <label for="productPrice">Product price<span style={{ 'color': 'red' }}>*</span></label>
-                            <input ref={(element) => productPrice = element} type="text" class="form-control" id="productPrice" required />
-                        </div>
+                      
                         
                         
                         
